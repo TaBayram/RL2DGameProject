@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7y2h5vqcp68t"]
+
+[ext_resource type="PackedScene" uid="uid://buld0rfn5lp4p" path="res://Powerups/Powerup.tscn" id="1_defts"]
+[ext_resource type="Script" path="res://Scripts/SpeedPowerup.cs" id="2_yq31p"]
+
+[node name="SpeedPowerup" instance=ExtResource("1_defts")]
+script = ExtResource("2_yq31p")

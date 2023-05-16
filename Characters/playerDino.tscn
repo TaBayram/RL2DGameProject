@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dil8olng3eq3i"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="1_tflpt"]
+[ext_resource type="Texture2D" uid="uid://cx0yyovs3dx88" path="res://Assets/Dino/sheets/DinoSprites - doux.png" id="2_0oaui"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6vbcc"]
+size = Vector2(20, 16)
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(235, 152)
+up_direction = Vector2(0, 1)
+script = ExtResource("1_tflpt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 10)
+shape = SubResource("RectangleShape2D_6vbcc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_0oaui")
+hframes = 24
