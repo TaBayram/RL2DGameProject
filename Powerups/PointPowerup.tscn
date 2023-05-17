@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwa51v7pgmauy"]
+
+[ext_resource type="PackedScene" uid="uid://buld0rfn5lp4p" path="res://Powerups/Powerup.tscn" id="1_726tu"]
+[ext_resource type="Script" path="res://Scripts/PointPowerup.cs" id="2_tkdml"]
+[ext_resource type="Texture2D" uid="uid://dqjt6wvwwlein" path="res://Assets/Kyrise's 16x16 RPG Icon Pack - V1.3/icons/32x32/shard_01b.png" id="3_nekjw"]
+
+[node name="PointPowerup" instance=ExtResource("1_726tu")]
+script = ExtResource("2_tkdml")
+
+[node name="Sprite2D" parent="." index="0"]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_nekjw")
+
+[node name="Timer" parent="." index="3"]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

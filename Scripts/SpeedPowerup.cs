@@ -13,9 +13,21 @@ public partial class SpeedPowerup : Powerup
 	{
 	}
 
-	public override void givePowerup(Node body)
+	public override void GivePowerup(Node body)
 	{
-		
-		GD.Print("hey2");
+		IMover mover = body.GetNode<IMover>(body.GetPath());
+		if(mover != null){
+			mover.ModifySpeedTimed(0.20f, 10);
+			this.Destroy();
+		}
 	}
+	
+	
+private void _on_timer_timeout()
+{
+	this.Destroy();
+	// Replace with function body.
 }
+
+}
+

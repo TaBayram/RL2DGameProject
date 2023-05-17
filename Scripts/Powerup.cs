@@ -3,7 +3,7 @@ using System;
 
 public abstract partial class Powerup : Area2D
 {
-	public abstract void givePowerup(Node body);
+	public abstract void GivePowerup(Node body);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -15,9 +15,10 @@ public abstract partial class Powerup : Area2D
 	}
 
 	public void _on_body_entered(Node2D body){
-		//Is body player or ai?
-		GD.Print("hey");
-		this.givePowerup(body);
+		this.GivePowerup(body);
+	}
 
+	protected void Destroy(){
+		QueueFree();
 	}
 }

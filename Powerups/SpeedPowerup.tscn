@@ -1,7 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7y2h5vqcp68t"]
+[gd_scene load_steps=4 format=3 uid="uid://b7y2h5vqcp68t"]
 
 [ext_resource type="PackedScene" uid="uid://buld0rfn5lp4p" path="res://Powerups/Powerup.tscn" id="1_defts"]
 [ext_resource type="Script" path="res://Scripts/SpeedPowerup.cs" id="2_yq31p"]
+[ext_resource type="Texture2D" uid="uid://ctn3cvxl52g3y" path="res://Assets/Kyrise's 16x16 RPG Icon Pack - V1.3/icons/32x32/shard_01c.png" id="3_utph5"]
 
 [node name="SpeedPowerup" instance=ExtResource("1_defts")]
 script = ExtResource("2_yq31p")
+
+[node name="Sprite2D" parent="." index="0"]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_utph5")
+
+[node name="Timer" parent="." index="3"]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
