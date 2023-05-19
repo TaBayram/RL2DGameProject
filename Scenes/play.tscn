@@ -1,8 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://bpbx8mg3x2yxy"]
+[gd_scene load_steps=21 format=3 uid="uid://bpbx8mg3x2yxy"]
 
 [ext_resource type="Texture2D" uid="uid://bkmfw8i53elle" path="res://Assets/Texture/TX Tileset Grass.png" id="1_s7ud6"]
 [ext_resource type="Script" path="res://Scripts/ScoreManager.cs" id="1_x01ik"]
-[ext_resource type="PackedScene" uid="uid://dil8olng3eq3i" path="res://Characters/playerDino.tscn" id="2_jk16p"]
 [ext_resource type="Texture2D" uid="uid://bbapr52nbbsyn" path="res://Assets/Texture/TX Plant.png" id="2_xcuh2"]
 [ext_resource type="Texture2D" uid="uid://dc7j1jqw0c4fv" path="res://Assets/Texture/TX Tileset Stone Ground.png" id="3_in18h"]
 [ext_resource type="PackedScene" uid="uid://b5c0kbffj7qf6" path="res://Powerups/DeathPowerup.tscn" id="3_xdrtp"]
@@ -11,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://da06pstyn31rf" path="res://Assets/Texture/TX Props.png" id="5_jbqm8"]
 [ext_resource type="PackedScene" uid="uid://b7y2h5vqcp68t" path="res://Powerups/SpeedPowerup.tscn" id="7_ocm1b"]
 [ext_resource type="Script" path="res://Scripts/PowerupSpawner.cs" id="8_gf1l0"]
+[ext_resource type="Texture2D" uid="uid://dxjum2yn14q3g" path="res://Assets/Kyrise's 16x16 RPG Icon Pack - V1.3/icons/16x16/candy_02e.png" id="11_swvqc"]
+[ext_resource type="PackedScene" path="res://Characters/aiDino.tscn" id="12_c231d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_50nug"]
 texture = ExtResource("1_s7ud6")
@@ -767,11 +768,6 @@ layer_2/y_sort_origin = 0
 layer_2/z_index = 0
 layer_2/tile_data = PackedInt32Array(4, 393220, 6, 5, 131076, 9, 6, 196612, 6, 7, 196612, 6, 8, 393220, 6, 9, 196612, 6, 10, 262148, 6, 11, 196612, 6, 12, 393220, 6, 13, 196612, 6, 14, 65540, 6, 15, 262148, 9, 16, 262148, 9, 17, 327684, 9, 18, 262148, 9, 19, 65540, 9, 20, 196612, 6, 21, 131076, 6, 22, 393220, 6, 23, 131076, 6, 24, 393220, 6, 25, 131076, 6, 26, 65540, 9, 27, 65540, 9, 28, 327684, 9, 29, 65540, 9, 30, 262148, 9, 31, 196612, 3, 3, 65540, 3)
 
-[node name="Player" parent="." instance=ExtResource("2_jk16p")]
-z_index = 1
-y_sort_enabled = true
-position = Vector2(210, 317)
-
 [node name="Walls" type="StaticBody2D" parent="."]
 position = Vector2(540, 325)
 
@@ -790,5 +786,24 @@ shape = SubResource("RectangleShape2D_j28ht")
 [node name="Right" type="CollisionShape2D" parent="Walls"]
 position = Vector2(470, 3)
 shape = SubResource("RectangleShape2D_j28ht")
+
+[node name="Ball2" type="Node2D" parent="."]
+position = Vector2(805, 423)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball2"]
+scale = Vector2(2, 2)
+texture = ExtResource("11_swvqc")
+metadata/_edit_lock_ = true
+
+[node name="Ball" type="Node2D" parent="."]
+position = Vector2(289, 207)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+scale = Vector2(2, 2)
+texture = ExtResource("11_swvqc")
+metadata/_edit_lock_ = true
+
+[node name="AiDino" parent="." instance=ExtResource("12_c231d")]
+position = Vector2(513, 296)
 
 [connection signal="timeout" from="PowerupSpawner/Timer" to="PowerupSpawner" method="_on_timer_timeout"]

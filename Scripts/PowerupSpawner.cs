@@ -30,7 +30,6 @@ public partial class PowerupSpawner : Node2D
 	private void _on_timer_timeout()
 	{
 		int chance = randomNumberGenerator.RandiRange(0, 100);
-		GD.Print(chance);
 		PackedScene packedPowerup = null; 
 		for (int i = 0; i < powerups.Length; i++)
 		{

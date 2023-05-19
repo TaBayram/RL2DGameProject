@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="RL2DGameProject"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_rl_agents/plugin.cfg")
+
 [physics]
 
 2d/default_gravity=0.0

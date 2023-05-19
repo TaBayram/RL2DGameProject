@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://cpfah5a11f825"]
+
+[ext_resource type="Script" path="res://Scripts/aiDino.gd" id="1_6nfiq"]
+[ext_resource type="Texture2D" uid="uid://bmqh1iwbns0f3" path="res://Assets/Dino/sheets/DinoSprites - mort.png" id="1_qlai5"]
+[ext_resource type="Script" path="res://Scripts/aiDinoController.gd" id="3_i5q7u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_axjqn"]
+size = Vector2(20, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6vbcc"]
+size = Vector2(20, 16)
+
+[node name="AiDino" type="CharacterBody2D"]
+up_direction = Vector2(0, 1)
+script = ExtResource("1_6nfiq")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, 10)
+shape = SubResource("RectangleShape2D_axjqn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 10)
+shape = SubResource("RectangleShape2D_6vbcc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_qlai5")
+hframes = 24
+frame = 1
+
+[node name="AIController2D" type="Node" parent="."]
+script = ExtResource("3_i5q7u")
+reset_after = 5000
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

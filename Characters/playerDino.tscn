@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dil8olng3eq3i"]
+[gd_scene load_steps=10 format=3 uid="uid://dil8olng3eq3i"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="1_tflpt"]
 [ext_resource type="Texture2D" uid="uid://cx0yyovs3dx88" path="res://Assets/Dino/sheets/DinoSprites - doux.png" id="2_0oaui"]
@@ -6,8 +6,42 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6vbcc"]
 size = Vector2(20, 16)
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fpmox"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_iyxpv"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_2af3r"]
+states/Start/position = Vector2(161, 77)
+states/walk/node = SubResource("AnimationNodeAnimation_fpmox")
+states/walk/position = Vector2(373, 58)
+transitions = ["Start", "walk", SubResource("AnimationNodeStateMachineTransition_iyxpv")]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_rgm4t"]
+
+[sub_resource type="Animation" id="Animation_deml7"]
+resource_name = "walk"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [3, 9]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mm3r8"]
+_data = {
+"walk": SubResource("Animation_deml7")
+}
+
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(235, 152)
 up_direction = Vector2(0, 1)
 script = ExtResource("1_tflpt")
 
@@ -19,3 +53,15 @@ shape = SubResource("RectangleShape2D_6vbcc")
 scale = Vector2(2, 2)
 texture = ExtResource("2_0oaui")
 hframes = 24
+frame = 4
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_2af3r")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_rgm4t")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mm3r8")
+}
