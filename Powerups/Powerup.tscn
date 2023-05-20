@@ -67,6 +67,5 @@ script = ExtResource("1_q4tc6")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
-autostart = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
