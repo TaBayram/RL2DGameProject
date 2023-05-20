@@ -5,6 +5,7 @@ export_presets.cfg
 .godot
 log/
 bin/
+*.*.import
 
 # Imported translations (automatically generated from CSV files)
 *.translation
