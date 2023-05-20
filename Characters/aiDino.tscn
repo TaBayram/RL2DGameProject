@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cpfah5a11f825"]
+[gd_scene load_steps=6 format=3 uid="uid://cviukuxhgjsfu"]
 
-[ext_resource type="Script" path="res://Scripts/aiDino.gd" id="1_6nfiq"]
+[ext_resource type="Script" path="res://Scripts/rl/aiDino.gd" id="1_4mhqi"]
 [ext_resource type="Texture2D" uid="uid://bmqh1iwbns0f3" path="res://Assets/Dino/sheets/DinoSprites - mort.png" id="1_qlai5"]
-[ext_resource type="Script" path="res://Scripts/aiDinoController.gd" id="3_i5q7u"]
+[ext_resource type="Script" path="res://Scripts/rl/aiDinoController.gd" id="3_bnrx4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_axjqn"]
 size = Vector2(20, 16)
@@ -12,7 +12,7 @@ size = Vector2(20, 16)
 
 [node name="AiDino" type="CharacterBody2D"]
 up_direction = Vector2(0, 1)
-script = ExtResource("1_6nfiq")
+script = ExtResource("1_4mhqi")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -30,8 +30,8 @@ texture = ExtResource("1_qlai5")
 hframes = 24
 frame = 1
 
-[node name="AIController2D" type="Node" parent="."]
-script = ExtResource("3_i5q7u")
-reset_after = 5000
+[node name="AIController2D" type="Node" parent="." groups=["AGENT"]]
+script = ExtResource("3_bnrx4")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="onReset" from="AIController2D" to="." method="_on_ai_controller_2d_on_reset"]

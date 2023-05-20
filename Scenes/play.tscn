@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bpbx8mg3x2yxy"]
+[gd_scene load_steps=22 format=3 uid="uid://bpbx8mg3x2yxy"]
 
 [ext_resource type="Texture2D" uid="uid://bkmfw8i53elle" path="res://Assets/Texture/TX Tileset Grass.png" id="1_s7ud6"]
 [ext_resource type="Script" path="res://Scripts/ScoreManager.cs" id="1_x01ik"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b7y2h5vqcp68t" path="res://Powerups/SpeedPowerup.tscn" id="7_ocm1b"]
 [ext_resource type="Script" path="res://Scripts/PowerupSpawner.cs" id="8_gf1l0"]
 [ext_resource type="Texture2D" uid="uid://dxjum2yn14q3g" path="res://Assets/Kyrise's 16x16 RPG Icon Pack - V1.3/icons/16x16/candy_02e.png" id="11_swvqc"]
-[ext_resource type="PackedScene" path="res://Characters/aiDino.tscn" id="12_c231d"]
+[ext_resource type="PackedScene" uid="uid://cviukuxhgjsfu" path="res://Characters/aiDino.tscn" id="12_c231d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_50nug"]
 texture = ExtResource("1_s7ud6")
@@ -695,6 +695,8 @@ size = Vector2(1080, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j28ht"]
 size = Vector2(20, 680)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_i6k8l"]
+
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
 
@@ -739,7 +741,6 @@ chances = PackedInt32Array(20, 50, 100)
 
 [node name="Timer" type="Timer" parent="PowerupSpawner"]
 wait_time = 2.0
-autostart = true
 
 [node name="TopLeft" type="Node2D" parent="PowerupSpawner"]
 position = Vector2(-280, -150)
@@ -796,7 +797,14 @@ texture = ExtResource("11_swvqc")
 metadata/_edit_lock_ = true
 
 [node name="Ball" type="Node2D" parent="."]
-position = Vector2(289, 207)
+position = Vector2(287, 232)
+
+[node name="Area2D" type="Area2D" parent="Ball"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball/Area2D"]
+shape = SubResource("CircleShape2D_i6k8l")
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Ball"]
 scale = Vector2(2, 2)
@@ -804,6 +812,6 @@ texture = ExtResource("11_swvqc")
 metadata/_edit_lock_ = true
 
 [node name="AiDino" parent="." instance=ExtResource("12_c231d")]
-position = Vector2(513, 296)
+position = Vector2(541, 318)
 
 [connection signal="timeout" from="PowerupSpawner/Timer" to="PowerupSpawner" method="_on_timer_timeout"]

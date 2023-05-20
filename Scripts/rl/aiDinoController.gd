@@ -1,4 +1,7 @@
 extends AIController2D
+class_name AIDinoController
+#Signals
+signal onReset
 
 # Stores the action sampled for the agent's policy, running in python
 var move_action = Vector2.ZERO
@@ -13,7 +16,8 @@ func get_obs() -> Dictionary:
 	
 	
 	var result := []
-	
+	result.append(relative.x)
+	result.append(relative.y)
 	result.append(distance)
 
 	
@@ -34,9 +38,14 @@ func set_action(action) -> void:
 	move_action.x = action["move"][0]
 	move_action.y = action["move"][1]
 
+func reset():
+	bestBallDistance = 999999
+	n_steps = 0
+	needs_reset = false
+	onReset.emit();
 
 func update_reward():
-	reward -= 0.01 # step penalty
+	reward -= 0.005 # step penalty
 	reward += shaping_reward()
 	
 func shaping_reward():
@@ -45,7 +54,8 @@ func shaping_reward():
 	
 	if ballDistance < bestBallDistance:
 		s_reward += bestBallDistance - ballDistance
+		#print("Best",bestBallDistance," now ",ballDistance, " reward ", reward)
 		bestBallDistance = ballDistance
 		
-	s_reward /= 100.0
+	s_reward /= 10.0
 	return s_reward

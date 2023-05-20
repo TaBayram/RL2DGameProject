@@ -9,4 +9,8 @@
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_jghun")
-speed_up = 4
+onnx_model_path = "res://model.onnx"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1144, 661)
+zoom = Vector2(0.457, 0.457)
