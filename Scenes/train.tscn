@@ -7,6 +7,51 @@
 
 [node name="Main" parent="." instance=ExtResource("1_balmc")]
 
+[node name="Main2" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(1158, 7)
+
+[node name="Main3" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(4, 653)
+
+[node name="Main4" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(1162, 660)
+
+[node name="Main5" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(19, 1318)
+
+[node name="Main6" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(1177, 1325)
+
+[node name="Main7" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(23, 1971)
+
+[node name="Main8" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(1181, 1978)
+
+[node name="Main9" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(2312, 10)
+
+[node name="Main10" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(3470, 17)
+
+[node name="Main11" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(2316, 663)
+
+[node name="Main12" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(3474, 670)
+
+[node name="Main13" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(2331, 1328)
+
+[node name="Main14" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(3489, 1335)
+
+[node name="Main15" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(2335, 1981)
+
+[node name="Main16" parent="." instance=ExtResource("1_balmc")]
+position = Vector2(3493, 1988)
+
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_jghun")
 onnx_model_path = "res://model.onnx"
