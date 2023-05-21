@@ -6,6 +6,9 @@
 
 [node name="SpeedPowerup" instance=ExtResource("1_defts")]
 script = ExtResource("2_yq31p")
+speedPercentage = 0.5
+duration = 1.5
+name = "Speed"
 
 [node name="Sprite2D" parent="." index="0"]
 scale = Vector2(0.75, 0.75)

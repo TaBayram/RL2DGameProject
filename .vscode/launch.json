@@ -2,10 +2,32 @@
     "version": "2.0.0",
     "configurations": [
         {
+            "name": "🕹 Debug Game",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "C:\\Program Files\\Godot\\Godot",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+        },
+        {
+            "name": "🎭 Debug Current Scene",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "C:\\Program Files\\Godot\\Godot",
+            "args": [
+              "${fileDirname}/${fileBasenameNoExtension}.tscn"
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+          },
+        {
             "name": "Play in Editor",
             "type": "godot-mono",
             "mode": "playInEditor",
-            "request": "launch"
+            "request": "launch",
         },
         {
             "name": "Launch",
@@ -13,7 +35,7 @@
             "request": "launch",
             "mode": "executable",
             "preLaunchTask": "build",
-            "executable": "C:\\Program Files\\Godot\\Godot.exe",
+            "executable": "C:\\Program Files\\Godot\\Godot",
             // See which arguments are available here:
             // https://docs.godotengine.org/en/stable/getting_started/editor/command_line_tutorial.html
             "executableArguments": [
@@ -27,7 +49,7 @@
             "request": "launch",
             "mode": "executable",
             "preLaunchTask": "build",
-            "executable": "C:\\Program Files\\Godot\\Godot.exe",
+            "executable": "C:\\Program Files\\Godot\\Godot",
             // See which arguments are available here:
             // https://docs.godotengine.org/en/stable/getting_started/editor/command_line_tutorial.html
             "executableArguments": [

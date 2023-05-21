@@ -15,10 +15,24 @@ public partial class PointPowerup : Powerup
 
 	public override void GivePowerup(Node body)
 	{
-		CharacterBody2D cBody = body.GetNode<CharacterBody2D>(body.GetPath());
-		if(cBody != null){
-			ScoreManager.instance.GivePointToPlayer();
-			this.Destroy();
+		try
+		{
+			IChar character = body.GetNode<IChar>(body.GetPath());
+			if (character != null)
+			{
+				if(character.IsPlayer){
+					ScoreManager.instance.GivePointToPlayer();
+				}
+				else{
+					ScoreManager.instance.GivePointToAI();
+				}
+				this.Destroy();
+			}
+
+		}
+		catch (InvalidCastException castException)
+		{
+
 		}
 	}
 	

@@ -15,11 +15,25 @@ public partial class DeathPowerup : Powerup
 
 	public override void GivePowerup(Node body)
 	{
-		CharacterBody2D cBody = body.GetNode<CharacterBody2D>(body.GetPath());
-		if (cBody != null)
+		try
 		{
-			ScoreManager.instance.ResetPlayerPoints();
-			this.Destroy();
+			IChar character = body.GetNodeOrNull<IChar>(body.GetPath());
+			if (character != null)
+			{
+				character.Reset();
+				if(character.IsPlayer){
+					ScoreManager.instance.ResetPlayerPoints();
+				}
+				else{
+					ScoreManager.instance.ResetAIPoints();
+				}
+				this.Destroy();
+			}
+
+		}
+		catch (InvalidCastException castException)
+		{
+
 		}
 	}
 

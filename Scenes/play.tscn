@@ -1,5 +1,6 @@
-[gd_scene load_steps=20 format=3 uid="uid://bpbx8mg3x2yxy"]
+[gd_scene load_steps=23 format=3 uid="uid://bpbx8mg3x2yxy"]
 
+[ext_resource type="Script" path="res://Scripts/GameManager.cs" id="1_05tc6"]
 [ext_resource type="Texture2D" uid="uid://bkmfw8i53elle" path="res://Assets/Texture/TX Tileset Grass.png" id="1_s7ud6"]
 [ext_resource type="Script" path="res://Scripts/ScoreManager.cs" id="1_x01ik"]
 [ext_resource type="Texture2D" uid="uid://bbapr52nbbsyn" path="res://Assets/Texture/TX Plant.png" id="2_xcuh2"]
@@ -11,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b7y2h5vqcp68t" path="res://Powerups/SpeedPowerup.tscn" id="7_ocm1b"]
 [ext_resource type="Script" path="res://Scripts/PowerupSpawner.cs" id="8_gf1l0"]
 [ext_resource type="PackedScene" uid="uid://dil8olng3eq3i" path="res://Characters/playerDino.tscn" id="11_iknw2"]
+[ext_resource type="PackedScene" uid="uid://dlug1gv4prrrs" path="res://Characters/aiYellowDino.tscn" id="12_aqp2k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_50nug"]
 texture = ExtResource("1_s7ud6")
@@ -694,8 +696,40 @@ size = Vector2(1080, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j28ht"]
 size = Vector2(20, 680)
 
-[node name="Main" type="Node2D"]
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_daw7e"]
+vertices = PackedVector2Array(876, -2, 878, 455, -7, 453, -1, 4)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(876, -2, 878, 455, -7, 453, -1, 4)])
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("powerupSpawner", "scoreManager", "player", "ai")]
 y_sort_enabled = true
+script = ExtResource("1_05tc6")
+powerupSpawner = NodePath("PowerupSpawner")
+scoreManager = NodePath("ScoreManager")
+player = NodePath("Player")
+ai = NodePath("AiYDino")
+
+[node name="ScoreManager" type="Node2D" parent="." node_paths=PackedStringArray("playerLabel", "aiLabel")]
+script = ExtResource("1_x01ik")
+playerLabel = NodePath("../Control/LabelPlayer")
+aiLabel = NodePath("../Control/LabelAI")
+
+[node name="PowerupSpawner" type="Node2D" parent="." node_paths=PackedStringArray("topLeft", "botRight")]
+position = Vector2(540, 325)
+script = ExtResource("8_gf1l0")
+topLeft = NodePath("TopLeft")
+botRight = NodePath("BotRight")
+powerups = Array[Object]([ExtResource("3_xdrtp"), ExtResource("7_ocm1b"), ExtResource("4_wub58")])
+chances = PackedInt32Array(15, 50, 100)
+
+[node name="Timer" type="Timer" parent="PowerupSpawner"]
+autostart = true
+
+[node name="TopLeft" type="Node2D" parent="PowerupSpawner"]
+position = Vector2(-280, -150)
+
+[node name="BotRight" type="Node2D" parent="PowerupSpawner"]
+position = Vector2(280, 150)
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -712,7 +746,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Control"]
+[node name="LabelPlayer" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -724,27 +758,17 @@ offset_bottom = 36.0
 grow_horizontal = 2
 text = "Player Score:"
 
-[node name="ScoreManager" type="Node2D" parent="." node_paths=PackedStringArray("playerLabel")]
-script = ExtResource("1_x01ik")
-playerLabel = NodePath("../Control/Label")
-
-[node name="PowerupSpawner" type="Node2D" parent="." node_paths=PackedStringArray("topLeft", "botRight")]
-position = Vector2(540, 325)
-script = ExtResource("8_gf1l0")
-topLeft = NodePath("TopLeft")
-botRight = NodePath("BotRight")
-powerups = Array[Object]([ExtResource("3_xdrtp"), ExtResource("7_ocm1b"), ExtResource("4_wub58")])
-chances = PackedInt32Array(20, 50, 100)
-
-[node name="Timer" type="Timer" parent="PowerupSpawner"]
-wait_time = 2.0
-autostart = true
-
-[node name="TopLeft" type="Node2D" parent="PowerupSpawner"]
-position = Vector2(-280, -150)
-
-[node name="BotRight" type="Node2D" parent="PowerupSpawner"]
-position = Vector2(280, 150)
+[node name="LabelAI" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 244.5
+offset_top = 7.0
+offset_right = 344.5
+offset_bottom = 33.0
+grow_horizontal = 2
+text = "Player Score:"
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -768,26 +792,34 @@ layer_2/z_index = 0
 layer_2/tile_data = PackedInt32Array(4, 393220, 6, 5, 131076, 9, 6, 196612, 6, 7, 196612, 6, 8, 393220, 6, 9, 196612, 6, 10, 262148, 6, 11, 196612, 6, 12, 393220, 6, 13, 196612, 6, 14, 65540, 6, 15, 262148, 9, 16, 262148, 9, 17, 327684, 9, 18, 262148, 9, 19, 65540, 9, 20, 196612, 6, 21, 131076, 6, 22, 393220, 6, 23, 131076, 6, 24, 393220, 6, 25, 131076, 6, 26, 65540, 9, 27, 65540, 9, 28, 327684, 9, 29, 65540, 9, 30, 262148, 9, 31, 196612, 3, 3, 65540, 3)
 metadata/_edit_lock_ = true
 
-[node name="Walls" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="TileMap"]
 position = Vector2(540, 325)
 
-[node name="Bot" type="CollisionShape2D" parent="Walls"]
+[node name="Bot" type="CollisionShape2D" parent="TileMap/Walls"]
 position = Vector2(0, 240)
 shape = SubResource("RectangleShape2D_jalba")
 
-[node name="Top" type="CollisionShape2D" parent="Walls"]
+[node name="Top" type="CollisionShape2D" parent="TileMap/Walls"]
 position = Vector2(0, -240)
 shape = SubResource("RectangleShape2D_jalba")
 
-[node name="Left" type="CollisionShape2D" parent="Walls"]
+[node name="Left" type="CollisionShape2D" parent="TileMap/Walls"]
 position = Vector2(-431, 0)
 shape = SubResource("RectangleShape2D_j28ht")
 
-[node name="Right" type="CollisionShape2D" parent="Walls"]
+[node name="Right" type="CollisionShape2D" parent="TileMap/Walls"]
 position = Vector2(470, 3)
 shape = SubResource("RectangleShape2D_j28ht")
 
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="TileMap"]
+position = Vector2(122, 97)
+navigation_polygon = SubResource("NavigationPolygon_daw7e")
+
 [node name="Player" parent="." instance=ExtResource("11_iknw2")]
-position = Vector2(282, 279)
+position = Vector2(223, 122)
+
+[node name="AiYDino" parent="." instance=ExtResource("12_aqp2k")]
+position = Vector2(907, 120)
+Speed = 150.0
 
 [connection signal="timeout" from="PowerupSpawner/Timer" to="PowerupSpawner" method="_on_timer_timeout"]

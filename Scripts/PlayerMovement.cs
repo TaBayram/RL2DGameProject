@@ -1,42 +1,54 @@
 using Godot;
 using System;
 
-public partial class PlayerMovement : CharacterBody2D, IMover
+public partial class PlayerMovement : CharacterBody2D, IChar
 {
-	float movementSpeed = 200.0f;
+    float speed = 200.0f;
+    Vector2 startPosition;
 
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+    [Export]
+    public float Speed { get => speed; set => speed = value; }
 
-	public float Speed { get => movementSpeed; set => movementSpeed = value; }
+    public bool IsPlayer => true;
 
-	public async void ModifySpeedTimed(float scale, float duration)
-	{
-		float modifiedSpeed = Speed * scale;
-		Speed += modifiedSpeed;
 
-		await ToSignal(GetTree().CreateTimer(duration), "timeout");
-		Speed -= modifiedSpeed;
-	}
+    public override void _Ready()
+    {
+        startPosition = GlobalPosition;
+    }
 
-	public override void _PhysicsProcess(double delta)
-	{
-		Vector2 velocity = Velocity;
-		
+    public async void ModifySpeedTimed(float scale, float duration)
+    {
+        float modifiedSpeed = Speed * scale;
+        Speed += modifiedSpeed;
 
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-		if (direction != Vector2.Zero)
-		{
-			velocity.X = direction.X * Speed;
-			velocity.Y = direction.Y * Speed;
-		}
-		else
-		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-			velocity.Y = Mathf.MoveToward(Velocity.Y, 0, Speed);
-		}
+        await ToSignal(GetTree().CreateTimer(duration), "timeout");
+        Speed -= modifiedSpeed;
+    }
 
-		Velocity = velocity;
-		MoveAndSlide();
-	}
+    public override void _PhysicsProcess(double delta)
+    {
+        Vector2 velocity = Velocity;
+
+
+        Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+        if (direction != Vector2.Zero)
+        {
+            velocity.X = direction.X * Speed;
+            velocity.Y = direction.Y * Speed;
+        }
+        else
+        {
+            velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
+            velocity.Y = Mathf.MoveToward(Velocity.Y, 0, Speed);
+        }
+
+        Velocity = velocity;
+        MoveAndSlide();
+    }
+
+    public void Reset()
+    {
+        GlobalPosition = startPosition;
+    }
 }

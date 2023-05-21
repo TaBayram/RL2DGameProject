@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
-@onready var ball = get_node("../Ball")
-@onready var ball2 = get_node("../Ball2")
+@onready var ball = get_node("../Player")
 @onready var ai_controller: AIDinoController = $AIController2D
 const SPEED = 200.0
 

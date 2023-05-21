@@ -45,6 +45,8 @@ _data = {
 up_direction = Vector2(0, 1)
 script = ExtResource("1_tflpt")
 
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 10)
 shape = SubResource("RectangleShape2D_6vbcc")
@@ -53,7 +55,7 @@ shape = SubResource("RectangleShape2D_6vbcc")
 scale = Vector2(2, 2)
 texture = ExtResource("2_0oaui")
 hframes = 24
-frame = 4
+frame = 3
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_2af3r")

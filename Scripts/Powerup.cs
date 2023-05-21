@@ -3,6 +3,9 @@ using System;
 
 public abstract partial class Powerup : Area2D
 {
+	[Export]
+	public string name;
+	public bool isUsed = false;
 	public abstract void GivePowerup(Node body);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -19,6 +22,7 @@ public abstract partial class Powerup : Area2D
 	}
 
 	protected void Destroy(){
+		isUsed = true;
 		QueueFree();
 	}
 }
